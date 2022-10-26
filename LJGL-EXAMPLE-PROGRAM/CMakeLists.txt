@@ -1,6 +1,6 @@
 add_executable(main main.cpp)
 
-target_link_libraries(main PRIVATE testLibrary)
+target_link_libraries(main PRIVATE LJGL)
 
 # Copy GLSL files over to the build directory
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/GLSL DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
