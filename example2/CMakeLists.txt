@@ -1,6 +1,6 @@
-add_executable(example1 main.cpp)
+add_executable(example2 main.cpp)
 
-target_link_libraries(example1 PRIVATE LJGL)
+target_link_libraries(example2 PRIVATE LJGL)
 
 # Copy GLSL files over to the build directory
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/GLSL DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
