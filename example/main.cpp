@@ -7,9 +7,8 @@ int main(){
     std::cin >> objToLoad;
 
     // === Set up a GLFW window, and init GLAD ===
-    char windowName[] = "3D spinning object";
-    GLFWwindow* window = LJGL::setup(windowName); // Setup function exists just to move all the boilerplate crap out of sight
-    glEnable(GL_DEPTH_TEST); // Enable depth testing - emsures that objects are drawn in the right order
+    LJGL::init(); // Sets up GLFW and GLAD
+    GLFWwindow* window = LJGL::createGlfwWindow(800, 600, "LJGL Example"); // Creates a GLFW window
 
     // === Create GL objects ===
     LJGL::camera cam(window); // Create a camera object, this also sets up callbacks
@@ -30,7 +29,6 @@ int main(){
         object.m_model = glm::rotate(object.m_model, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
         // === Render ===
-        glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Set the background color
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the color and depth buffer
         object.draw();
 
