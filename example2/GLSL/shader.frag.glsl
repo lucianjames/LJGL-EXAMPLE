@@ -17,6 +17,4 @@ void main(){
 
     vec3 result = (ambient + diffuse) * objectColor;
     FragColor = vec4(result, 1.0);
-
-    FragColor = vec4(normal, 1.0); // Normal debug
 }

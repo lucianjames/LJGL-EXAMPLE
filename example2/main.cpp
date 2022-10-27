@@ -9,22 +9,16 @@ int main(){
     // === Set up a GLFW window, and init GLAD ===
     char windowName[] = "3D spinning object";
     GLFWwindow* window = LJGL::setup(windowName); // Setup function exists just to move all the boilerplate crap out of sight
-    LJGL::camera cam(window); // Create a camera object, this also sets up callbacks
     glEnable(GL_DEPTH_TEST); // Enable depth testing - emsures that objects are drawn in the right order
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Enable wireframe for model debugging
 
+    // === Create GL objects ===
+    LJGL::camera cam(window); // Create a camera object, this also sets up callbacks
     LJGL::model_EBO object; // Create a model object
     object.readVBO(objToLoad + ".vbo");
     object.readEBO(objToLoad + ".ebo");
     object.m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
-    object.m_shader.setUniform3f("lightPos", 1.0f, 10.0f, 2.0f);
-
-    // === Define transforms ===
-    // === perspective/view transforms:
-    int m_viewport[4]; // Stores the viewport size
-    glGetIntegerv(GL_VIEWPORT, m_viewport); // Gets the viewport size
-    glm::mat4 perspective = glm::perspective(glm::radians(45.0f), (float)m_viewport[2] / (float)m_viewport[3], 0.1f, 100.0f); // Define the perspective projection matrix
-    glm::mat4 model = glm::mat4(1.0f); // Define a model matrix for the square
+    object.m_shader.setUniform3f("lightPos", 3.0f, 1.0f, 2.0f);
+    glm::mat4 model = glm::mat4(1.0f); // Define a model matrix for the object
 
     // === Main loop === //
     while (!glfwWindowShouldClose(window)){
@@ -37,15 +31,20 @@ int main(){
         // === Render ===
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f); // Set the background color
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the color and depth buffer
+
+        // Close window if escape is pressed
+        if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){ glfwSetWindowShouldClose(window, true); }
         
         // Camera movement
-        cam.processMovement(); // Process camera movement
+        cam.processMovement(); // Process camera movement (WASD)
         object.setViewT(cam.getViewMatrix()); // Update the view matrix
         object.setProjectionT(cam.getPerspectiveMatrix()); // Update the projection matrix
 
-        // Rotate and draw the suzanne :D
-        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.5f)); // Rotate the suzanne
+        // Rotate the suzanne :D monke spinny (or whatever object you loaded (I hope it's a suzanne))
+        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         object.setModelT(model); // Set the model matrix
+
+        // Render the object
         object.draw();
 
         // === Swap buffers ===
