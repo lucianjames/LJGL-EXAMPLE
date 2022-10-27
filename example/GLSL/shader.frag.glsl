@@ -6,7 +6,6 @@ out vec4 FragColor;
 
 in vec3 normal;
 in vec3 fragPos;
-in mat4 modelTransform;
 
 vec3 lightColor = vec3(1.0, 1.0, 1.0);
 vec3 objectColor = vec3(0.1, 0.5, 0.6);
