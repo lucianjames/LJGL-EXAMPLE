@@ -7,14 +7,11 @@ int main(){
     std::cin >> objToLoad;
 
     // === Set up a GLFW window, and init GLAD ===
-    LJGL::init(); // Sets up GLFW and GLAD
-    GLFWwindow* window = LJGL::createGlfwWindow(800, 600, "LJGL Example"); // Creates a GLFW window
+    GLFWwindow* window = LJGL::init(512, 512, "LJGL Example", 3, 3);
 
     // === Create GL objects ===
     LJGL::camera cam(window); // Create a camera object, this also sets up callbacks
-    LJGL::model_EBO object; // Create a model object
-    object.readVBO(objToLoad + ".vbo");
-    object.readEBO(objToLoad + ".ebo");
+    LJGL::model_EBO object(objToLoad); // Create a model object
     object.m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
     object.m_shader.setUniform3f("lightPos", 3.0f, 1.0f, 2.0f);
 
