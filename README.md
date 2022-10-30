@@ -6,6 +6,6 @@ OpenGL is the only package you need to worry about installing seperate to this g
 OpenGL is added to the build via `find_package(OpenGL REQUIRED)` in LJGL/CMakeLists.txt
 ```
 git clone https://github.com/LJ3D/LJGL-EXAMPLE.git --recursive
-mkdir LJGL-EXAMPLE/build && cd build
+mkdir LJGL-EXAMPLE/build && cd LJGL-EXAMPLE/build
 cmake .. && cmake --build .
 ```
