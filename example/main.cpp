@@ -2,12 +2,13 @@
 int main(){
     GLFWwindow* window = LJGL::init(1024, 1024, "LJGL Example", 3, 3);
     LJGL::world testWorld(window);
-    unsigned int suzanne = testWorld.createAddModel_EBO("suzanneLOW");
+    unsigned int suzanne = testWorld.createAddModel_EBO("normalSuzanne");
+    testWorld.models[suzanne]->m_texture.createTexture("cpp.png");
     testWorld.models[suzanne]->m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
     testWorld.models[suzanne]->m_shader.setUniform3f("lightPos", 0.0f, 0.0f, 1.0f);
     testWorld.models[suzanne]->m_shader.setUniform3f("objectColor", 1.0f, 1.0f, 1.0f);
     while(!glfwWindowShouldClose(window)){
-        unsigned int newSuzanne = testWorld.createAddModel_EBO("suzanneLOW");
+        unsigned int newSuzanne = testWorld.createAddModel_EBO("normalSuzanne");
         testWorld.models[newSuzanne]->m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
         testWorld.models[newSuzanne]->m_shader.setUniform3f("lightPos", 0.0f, 0.0f, 1.0f);
         testWorld.models[newSuzanne]->m_shader.setUniform3f("objectColor", rand() % 100 / 100.0f, rand() % 100 / 100.0f, rand() % 100 / 100.0f);
