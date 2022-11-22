@@ -1,20 +1,22 @@
 #include <ljgl.hpp>
 int main(){
     GLFWwindow* window = LJGL::init(1024, 1024, "LJGL Example", 3, 3);
-    LJGL::world testWorld(window);
-    unsigned int suzanne = testWorld.createAddModel_EBO("normalSuzanne");
-    testWorld.models[suzanne]->m_texture.createTexture("cpp.png");
-    testWorld.models[suzanne]->m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
-    testWorld.models[suzanne]->m_shader.setUniform3f("lightPos", 0.0f, 0.0f, 1.0f);
-    testWorld.models[suzanne]->m_shader.setUniform3f("objectColor", 1.0f, 1.0f, 1.0f);
+    LJGL::camera cam(window);
+    LJGL::model suzanne;
+    suzanne.readVBO("normalSuzanne.vbo");
+    suzanne.readEBO("normalSuzanne.ebo");
+    suzanne.m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
+    suzanne.m_shader.setUniform3f("lightPos", 1.0f, 2.0f, 4.0f);
+    suzanne.m_shader.setUniform3f("objectColor", 1.0f, 0.5f, 0.25f);
+    suzanne.m_texture.createTexture("cpp.png");
     while(!glfwWindowShouldClose(window)){
-        unsigned int newSuzanne = testWorld.createAddModel_EBO("normalSuzanne");
-        testWorld.models[newSuzanne]->m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
-        testWorld.models[newSuzanne]->m_shader.setUniform3f("lightPos", 0.0f, 0.0f, 1.0f);
-        testWorld.models[newSuzanne]->m_shader.setUniform3f("objectColor", rand() % 100 / 100.0f, rand() % 100 / 100.0f, rand() % 100 / 100.0f);
-        testWorld.models[newSuzanne]->m_model = glm::translate(testWorld.models[newSuzanne]->m_model, glm::vec3(rand() % 40 - 20, rand() % 40 - 20, rand() % 40 - 20));
-        testWorld.processInput();
-        testWorld.render();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        cam.processInput();
+        suzanne.m_projection = cam.getPerspectiveMatrix();
+        suzanne.m_view = cam.getViewMatrix();
+        suzanne.draw();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
     }
     return 0;
 }
