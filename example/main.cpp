@@ -2,17 +2,19 @@
 int main(){
     GLFWwindow* window = LJGL::init(1024, 1024, "LJGL Example", 3, 3);
     LJGL::camera cam(window);
-    unsigned int maxInstanceCount = 12345;
+    unsigned int maxInstanceCount = 123456;
     LJGL::instancedModel suzannes(maxInstanceCount);
     suzannes.readVBO("normalSuzanne.vbo");
     suzannes.readEBO("normalSuzanne.ebo");
     suzannes.m_shader.createShader("GLSL/shader.vert.glsl", "GLSL/shader.frag.glsl");
     suzannes.m_shader.setUniform3f("lightPos", 1.0f, 2.0f, 4.0f);
-    suzannes.m_shader.setUniform3f("objectColor", 1.0f, 0.5f, 0.25f);
+    suzannes.m_shader.setUniform3f("objectColor", 1.0f, 1.0f, 1.0f);
     suzannes.m_texture.createTexture("cpp.png");
-    for(int i=0; i<maxInstanceCount; i++){
-        suzannes.addInstancePoint(((rand() % 1000) / 10.0f) - 50.0f, ((rand() % 1000) / 10.0f) - 50.0f, ((rand() % 1000) / 10.0f) - 50.0f);
+    std::vector<float> instancePositions;
+    for(int i=0; i<maxInstanceCount*3; i++){
+        instancePositions.push_back((rand()/(float)RAND_MAX)*2.0f);
     }
+    suzannes.setInstancePositions(instancePositions);
     while(!glfwWindowShouldClose(window)){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         cam.processInput();
