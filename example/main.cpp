@@ -2,7 +2,7 @@
 int main(){
     GLFWwindow* window = LJGL::init(1024, 1024, "LJGL Example", 3, 3);
     LJGL::camera cam(window);
-    unsigned int maxInstanceCount = 123456;
+    unsigned int maxInstanceCount = 10000;
     LJGL::instancedModel suzannes(maxInstanceCount);
     suzannes.readVBO("normalSuzanne.vbo");
     suzannes.readEBO("normalSuzanne.ebo");
@@ -12,7 +12,7 @@ int main(){
     suzannes.m_texture.createTexture("cpp.png");
     std::vector<float> instancePositions;
     for(int i=0; i<maxInstanceCount*3; i++){
-        instancePositions.push_back((rand()/(float)RAND_MAX)*2.0f);
+        instancePositions.push_back((rand()/(float)RAND_MAX)*10.0f);
     }
     suzannes.setInstancePositions(instancePositions);
     while(!glfwWindowShouldClose(window)){
