@@ -9,3 +9,9 @@ git clone https://github.com/LJ3D/LJGL-EXAMPLE.git --recursive
 mkdir LJGL-EXAMPLE/build && cd LJGL-EXAMPLE/build
 cmake .. && cmake --build .
 ```
+To run the program:
+```
+cd example/   # You have to run the example program from inside this dir
+./example     # Run the example
+# Now you can use wasd to move around; start with holding 's' to move out of the cube made up of Suzannes
+```
